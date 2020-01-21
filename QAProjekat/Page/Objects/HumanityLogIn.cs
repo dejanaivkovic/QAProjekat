@@ -13,40 +13,47 @@ namespace QAProjekat.Page.Objects
         public static readonly string EMAIL_XPath = "//input[@id='email']";
         public static readonly string PASS_XPath = "//input[@id='password']";
         public static readonly string LOGIN_XPath = "//button[@name='login'][contains(text(),'Log in')]";
+
+        private IWebDriver wd;
+        public HumanityLogIn(IWebDriver wd)
+        {
+            this.wd = wd;
+        }
+
         #region NavigateTO
-        public static void NavigateTo(IWebDriver wd)
+        public void NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
         }
         #endregion
         #region EMAIL
-        public static IWebElement GetEmail(IWebDriver wd)
+        public IWebElement GetEmail()
         {
             return wd.FindElement(By.XPath(EMAIL_XPath));
         }
-        public static void SendEmail(IWebDriver wd, string data)
+        public void SendEmail(string data)
         {
-            GetEmail(wd).SendKeys(data);
+            GetEmail().SendKeys(data);
         }
         #endregion
         #region PASS
-        public static IWebElement GetPass(IWebDriver wd)
+        public IWebElement GetPass()
         {
             return wd.FindElement(By.XPath(PASS_XPath));
         }
-        public static void SendPass(IWebDriver wd, string data)
+        public void SendPass(string data)
         {
-            GetPass(wd).SendKeys(data);
+            GetPass().SendKeys(data);
         }
         #endregion
         #region LogIn
-        public static IWebElement LoginButton(IWebDriver wd)
+        public IWebElement LoginButton()
         {
             return wd.FindElement(By.XPath(LOGIN_XPath));
         }
-        public static void ClickLogin(IWebDriver wd)
+        public void ClickLogin()
         {
-            LoginButton(wd).Click();
+            LoginButton().Click();
         }
         #endregion
 

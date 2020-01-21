@@ -20,8 +20,17 @@ namespace QAProjekat.Page.Objects
         //ova promenljiva postoji jer je na mom racunaru manja rezolucija pa informcija"accept cookies" prelazi preko dugmeta
         //a mora celo dugme da bude vidljivo da bi se kliknulo na njega
         public static readonly string COOKIES_XPath = "//a[@class='cc-btn cc-dismiss']";
+
+
+        private IWebDriver wd;
+
+        public HumanityHome(IWebDriver wd)
+        {
+            this.wd = wd;
+        }
+
         #region NavigateTO
-        public static void NavigateTo(IWebDriver wd)
+        public void NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
         }
@@ -29,74 +38,74 @@ namespace QAProjekat.Page.Objects
 
 
         #region RegisterButton1
-        public static IWebElement RegisterButton1 (IWebDriver wd)
+        public IWebElement RegisterButton1 ()
         {
             return wd.FindElement(By.XPath(START_FREE_TRIAL_BUTTON_XPath));
         }
-        public static void ClickRegister1(IWebDriver wd)
+        public void ClickRegister1()
         {
-            RegisterButton1(wd).Click();
+            RegisterButton1().Click();
         }
         #endregion
         #region LoginButton
-        public static IWebElement LoginButton(IWebDriver wd)
+        public IWebElement LoginButton()
         {
             return wd.FindElement(By.XPath(LOGIN_BUTTON_XPath));
         }
-        public static void ClickLogin(IWebDriver wd)
+        public void ClickLogin()
         {
-            LoginButton(wd).Click();
+            LoginButton().Click();
         }
         #endregion
         #region AboutUs
-        public static IWebElement AboutUsButton(IWebDriver wd)
+        public IWebElement AboutUsButton()
         {
             return wd.FindElement(By.XPath(ABOUT_US_XPath));
         }
-        public static void ClickAboutUs(IWebDriver wd)
+        public void ClickAboutUs()
         {
-            LoginButton(wd).Click();
+            LoginButton().Click();
         }
         #endregion
         #region FullName
-        public static IWebElement GetFullName (IWebDriver wd)
+        public IWebElement GetFullName ()
         {
             return wd.FindElement(By.XPath(FULL_NAME_XPath));
         }
-        public static void SendFullName (IWebDriver wd, string data)
+        public void SendFullName (string data)
         {
-            GetFullName(wd).SendKeys(data);
+            GetFullName().SendKeys(data);
         }
         #endregion
 
         #region WorkEmail
-        public static IWebElement GetWorkEmail(IWebDriver wd)
+        public  IWebElement GetWorkEmail()
         {
             return wd.FindElement(By.XPath(WORK_EMAIL_XPath));
         }
-        public static void SendWorkEmail(IWebDriver wd, string data)
+        public  void SendWorkEmail(string data)
         {
-            GetWorkEmail(wd).SendKeys(data);
+            GetWorkEmail().SendKeys(data);
         }
         #endregion
         #region Cookies
-        public static IWebElement CookiesButton(IWebDriver wd)
+        public  IWebElement CookiesButton()
         {
             return wd.FindElement(By.XPath(COOKIES_XPath));
         }
-        public static void ClickCookies(IWebDriver wd)
+        public  void ClickCookies()
         {
-            CookiesButton(wd).Click();
+            CookiesButton().Click();
         }
         #endregion
         #region RegisterButton2
-        public static IWebElement RegisterButton2(IWebDriver wd)
+        public  IWebElement RegisterButton2()
         {
             return wd.FindElement(By.XPath(START_FREE_TRIAL_BUTTON2_XPath));
         }
-        public static void ClickRegister2(IWebDriver wd)
+        public  void ClickRegister2()
         {
-            RegisterButton2(wd).Click();
+            RegisterButton2().Click();
         }
 
         #endregion

@@ -21,9 +21,11 @@ namespace QAProjekat.Page.Objects
         }
 
         #region NavigateTO
-        public void NavigateTo()
+        //umesto void stavljeno vracamo isti objekat da mozemo da vezemo pozive
+        public HumanityLogIn NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
+            return this;
         }
         #endregion
         #region EMAIL
@@ -31,9 +33,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(EMAIL_XPath));
         }
-        public void SendEmail(string data)
+        public HumanityLogIn SendEmail(string data)
         {
             GetEmail().SendKeys(data);
+            return this;
         }
         #endregion
         #region PASS
@@ -41,9 +44,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(PASS_XPath));
         }
-        public void SendPass(string data)
+        public HumanityLogIn SendPass(string data)
         {
             GetPass().SendKeys(data);
+            return this;
         }
         #endregion
         #region LogIn
@@ -51,9 +55,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(LOGIN_XPath));
         }
-        public void ClickLogin()
+        public HumanityHome ClickLogin()
         {
             LoginButton().Click();
+            return new HumanityHome(wd);
         }
         #endregion
 

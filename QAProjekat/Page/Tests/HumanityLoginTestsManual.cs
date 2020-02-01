@@ -20,10 +20,10 @@ namespace QAProjekat.Page.Tests
             wd.Manage().Window.Maximize();
             Debug.WriteLine("Driver Initialized!");
             HumanityLogIn loginModel = new HumanityLogIn(wd);
-            loginModel.NavigateTo();
-            loginModel.SendEmail(EMAIL);
-            loginModel.SendPass(PASS);
-            loginModel.ClickLogin();
+            loginModel.NavigateTo()
+                .SendEmail(EMAIL)
+                .SendPass(PASS)
+                .ClickLogin();
             System.Threading.Thread.Sleep(5000); //stavljeno je jer mi se previse brzo ucita i test mi ne prolazi iako je tacan unos
             if(wd.Url.Contains(HumanityMenu.URL))
             {

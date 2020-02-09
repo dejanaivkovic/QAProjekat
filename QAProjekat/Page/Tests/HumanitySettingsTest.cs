@@ -36,8 +36,22 @@ namespace QAProjekat.Page.Tests
             {
                 Console.WriteLine("FAIL! Selected country not right");
             }
-
-            
+            if(settingsModel.GetSelectedLanguage()=="American English")
+            {
+                Console.WriteLine("PASS! Successfully selected language!");
+            }
+            else
+            {
+                Console.WriteLine("FAIL! Selected language not right");
+            }
+            if(settingsModel.GetSelectedTimeFormat()=="12 hour")
+            {
+                Console.WriteLine("PASS! Successfully selected time format!");
+            }
+            else
+            {
+                Console.WriteLine("FAIL! Selected time format not right");
+            }
            
 
 

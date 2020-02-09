@@ -11,8 +11,8 @@ namespace QAProjekat.Page.Tests
     public class HumanityAddNewEmployeeTestsManual
     {
         public static readonly string URL = "https://kuper.humanity.com/app/staff/assignstaff";
-        public static readonly string NAME = "Bozidar2";
-        public static readonly string LAST_NAME = "Boozic2";
+        public static readonly string NAME = "Bozidar";
+        public static readonly string LAST_NAME = "Boozic";
         public static readonly string EMAIL_1 = "bozidarbozic1@boza.com";
         public static void AddEmployeeTest()
         {

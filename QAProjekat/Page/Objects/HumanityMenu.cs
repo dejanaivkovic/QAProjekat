@@ -19,100 +19,116 @@ namespace QAProjekat.Page.Objects
         public static readonly string PAYROLL_XPath = "//a[@id='sn_payroll']//span[@class='primNavQtip__inner']";
         public static readonly string REPORTS_XPath = "//a[@id='sn_reports']//span[@class='primNavQtip__inner']";
         public static readonly string SETTINGS_XPath = "//a[@id='sn_admin']//span[@class='primNavQtip__inner']";
+        private IWebDriver wd;
+
+        public HumanityMenu(IWebDriver wd)
+        {
+            this.wd = wd;
+        }
         #region NavigateTo
-        public static void NavigateTo(IWebDriver wd)
+        public  HumanityMenu NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
+            return this;
         }
         #endregion
         #region Dashboard
-        public static IWebElement DashboardButton(IWebDriver wd)
+        public  IWebElement DashboardButton()
         {
             return wd.FindElement(By.XPath(DASHBOARD_XPath));
         }
-        public static void ClickDashboard(IWebDriver wd)
+        public  HumanityMenu ClickDashboard()
         {
-            DashboardButton(wd).Click();
+            DashboardButton().Click();
+            return this;
         }
         #endregion
         #region Shift_Planning
-        public static IWebElement ShiftPlanningButton (IWebDriver wd)
+        public  IWebElement ShiftPlanningButton()
         {
             return wd.FindElement(By.XPath(SHIFT_PLANNING_XPath));
         }
-        public static void ClickShiftPlanning(IWebDriver wd)
+        public HumanityMenu ClickShiftPlanning()
         {
-            ShiftPlanningButton(wd).Click();
+            ShiftPlanningButton().Click();
+            return this;
         }
         #endregion
         #region TimeClock
-        public static IWebElement TimeClockButton(IWebDriver wd)
+        public  IWebElement TimeClockButton()
         {
             return wd.FindElement(By.XPath(TIME_CLOCK_XPath));
         }
-        public static void ClickTimeClock(IWebDriver wd)
+        public HumanityMenu ClickTimeClock()
         {
-            TimeClockButton(wd).Click();
+            TimeClockButton().Click();
+            return this;
         }
         #endregion
         #region Leave
-        public static IWebElement LeaveButton(IWebDriver wd)
+        public  IWebElement LeaveButton()
         {
             return wd.FindElement(By.XPath(LEAVE_XPath));
         }
-        public static void ClickLeave(IWebDriver wd)
+        public HumanityMenu ClickLeave()
         {
-            LeaveButton(wd).Click();
+            LeaveButton().Click();
+            return this;
         }
         #endregion
         #region Training
-        public static IWebElement TrainingButton(IWebDriver wd)
+        public  IWebElement TrainingButton()
         {
             return wd.FindElement(By.XPath(TRAINING_XPath));
         }
-        public static void ClickTraining(IWebDriver wd)
+        public HumanityMenu ClickTraining()
         {
-            TrainingButton(wd).Click();
+            TrainingButton().Click();
+            return this;
         }
         #endregion
         #region Staff
-        public static IWebElement StaffButton(IWebDriver wd)
+        public  IWebElement StaffButton()
         {
             return wd.FindElement(By.XPath(STAFF_XPath));
         }
-        public static void ClickStaff(IWebDriver wd)
+        public HumanityStaff ClickStaff()
         {
-            StaffButton(wd).Click();
+            StaffButton().Click();
+            return new HumanityStaff(wd);
         }
         #endregion
         #region Payroll
-        public static IWebElement PayrollButton(IWebDriver wd)
+        public  IWebElement PayrollButton()
         {
             return wd.FindElement(By.XPath(PAYROLL_XPath));
         }
-        public static void ClickPayroll(IWebDriver wd)
+        public  HumanityMenu ClickPayroll()
         {
-            PayrollButton(wd).Click();
+            PayrollButton().Click();
+            return this;
         }
         #endregion
         #region Reports
-        public static IWebElement ReportskButton(IWebDriver wd)
+        public  IWebElement ReportskButton()
         {
             return wd.FindElement(By.XPath(REPORTS_XPath));
         }
-        public static void ClickReports(IWebDriver wd)
+        public HumanityMenu ClickReports()
         {
-            ReportskButton(wd).Click();
+            ReportskButton().Click();
+            return this;
         }
         #endregion
         #region Settings
-        public static IWebElement SettingsButton(IWebDriver wd)
+        public  IWebElement SettingsButton()
         {
             return wd.FindElement(By.XPath(SETTINGS_XPath));
         }
-        public static void ClickSettings(IWebDriver wd)
+        public HumanitySettings ClickSettings()
         {
-            SettingsButton(wd).Click();
+            SettingsButton().Click();
+            return new HumanitySettings(wd);
         }
         #endregion
 

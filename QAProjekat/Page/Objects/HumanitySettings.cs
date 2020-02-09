@@ -8,50 +8,111 @@ namespace QAProjekat.Page.Objects
 {
     public class HumanitySettings
     {
+        public static readonly string URL = "https://kuper.humanity.com/app/admin/settings/";
         public static readonly string COUNTRY_XPath = "//select[@id='country']";
         public static readonly string DEFAULT_LANGUAGE_XPath = "//td[@class='nowrap']//select[@name='language']";
         public static readonly string TIME_FORMAT_XPath = "//select[@name='pref_24hr']";
+        public static readonly string SAVE_XPath = "//button[@id='act_primary']";
+        private IWebDriver wd;
+        public HumanitySettings(IWebDriver wd)
+        {
+            this.wd = wd;
+        }
+        #region NavigateTo
+        public HumanitySettings NavigateTo()
+        {
+            wd.Navigate().GoToUrl(URL);
+            return this;
+        }
+        #endregion
+
+
         #region Country
-        public static IWebElement GetCountry (IWebDriver wd)
+
+        public IWebElement GetCountry ()
         {
             return wd.FindElement(By.XPath(COUNTRY_XPath));
         }
-        public static void SelectCountry (IWebDriver wd, string data)
+        public HumanitySettings SelectCountry (string data)
         {
-            SelectElement country = new SelectElement(GetCountry(wd));
+            SelectElement country = new SelectElement(GetCountry());
             country.SelectByText(data);
+            return this;
+        }
+
+        //metoda za uzimanje trenutno izabrane vrednosti za Country
+        public string GetSelectedCountry()
+        {
+            //potreban nam je SelectElement jer GetCountry vraca IWebElement a nama je potreban selektovana opcija
+            SelectElement select = new SelectElement(GetCountry());
+            IWebElement selected = select.SelectedOption;
+            return selected.Text;
+
         }
         #endregion
 
         #region Language
-        public static IWebElement GetLanguage(IWebDriver wd)
+        public IWebElement GetLanguage()
         {
             return wd.FindElement(By.XPath(DEFAULT_LANGUAGE_XPath));
         }
-        public static void SelectLanguage(IWebDriver wd, string data)
+        public HumanitySettings SelectLanguage(string data)
         {
-            SelectElement country = new SelectElement(GetLanguage(wd));
+            SelectElement country = new SelectElement(GetLanguage());
             country.SelectByText(data);
+            return this;
+        }
+        //metoda za uzimanje trenutno izabrane vrednosti za Language
+        public string GetSelectedLanguage()
+        {
+            //potreban nam je SelectElement jer GetLanguage vraca IWebElement a nama je potreban selektovana opcija
+            SelectElement select = new SelectElement(GetLanguage());
+            IWebElement selected = select.SelectedOption;
+            return selected.Text;
+
         }
         #endregion
 
         #region TimeFormat
-        public static IWebElement GetTimeFormat(IWebDriver wd)
+        public IWebElement GetTimeFormat()
         {
             return wd.FindElement(By.XPath(TIME_FORMAT_XPath));
         }
-        public static void SelectTimeFormat(IWebDriver wd, string data)
+        public HumanitySettings SelectTimeFormat(string data)
         {
-            SelectElement country = new SelectElement(GetCountry(wd));
+            SelectElement country = new SelectElement(GetTimeFormat());
             country.SelectByText(data);
+            return this;
+        }
+        //metoda za uzimanje trenutno izabrane vrednosti za TimeFormat
+        public string GetSelectedTimeFormat()
+        {
+            //potreban nam je SelectElement jer GetTimeFormat vraca IWebElement a nama je potreban selektovana opcija
+            SelectElement select = new SelectElement(GetTimeFormat());
+            IWebElement selected = select.SelectedOption;
+            return selected.Text;
+
         }
         #endregion
+
+        #region Save
+        public IWebElement GetSave()
+        {
+            return wd.FindElement(By.XPath(SAVE_XPath));
+        }
+        public HumanitySettings ClickSave()
+        {
+            GetSave().Click();
+            return this;
+        }
+        #endregion
+
         //metoda za pocetno slovo veliko ostala mala kod country
-        static string UppercaseFirst(string s)
+        /* static string UppercaseFirst(string s)
         {
             return char.ToUpper(s[0]) + s.Substring(1);
         }
-        /*
+        
         //metoda za svako novo pocetno slovo da je veliko kod language
         static string UppercaseWords(string value)
         {

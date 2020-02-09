@@ -13,45 +13,75 @@ namespace QAProjekat.Page.Objects
         public static readonly string UPLOAD_PICTURE_XPath = "//input[@id='fileupload']";
         public static readonly string NICK_NAME_XPath = "//input[@id='nick_name']";
         public static readonly string SAVE_BUTTON_XPath = "//button[@id='act_primary']";
+        public static readonly string FILE_UPLOAD_ID = "fileupload";
+        public static readonly string PROFILE_IMG_Xpath = "//img[contains(@id, 'userAvatar')]";
+        private IWebDriver wd;
+        public HumanityEditStaff (IWebDriver wd)
+        {
+            this.wd = wd;
+        }
         #region EditDetails
-        public static IWebElement GetEditDetails (IWebDriver wd)
+        public  IWebElement GetEditDetails ()
         {
             return wd.FindElement(By.XPath(EDIT_DETAILS_XPath));
         }
-        public static void ClickGetEditDetails (IWebDriver wd)
+        public HumanityEditStaff ClickGetEditDetails ()
         {
-            GetEditDetails(wd).Click();
+            GetEditDetails().Click();
+            return this;
         }
         #endregion
         #region UploadPicture
-        public static IWebElement GetUploadPicture(IWebDriver wd)
+        public IWebElement GetUploadPicture()
         {
             return wd.FindElement(By.XPath(UPLOAD_PICTURE_XPath));
         }
-        public static void ClickUploadPicture(IWebDriver wd)
+        public HumanityEditStaff ClickUploadPicture()
         {
-            GetUploadPicture(wd).Click();
+            GetUploadPicture().Click();
+            return this;
         }
         #endregion
         #region NickName
-        public static IWebElement GetNickName (IWebDriver wd)
+        public IWebElement GetNickName ()
         {
             return wd.FindElement(By.XPath(NICK_NAME_XPath));
         }
-        public static void SendNickName (IWebDriver wd, string data)
+        public HumanityEditStaff SendNickName (string data)
         {
-            GetNickName(wd).SendKeys(data);
+            GetNickName().SendKeys(data);
+            return this;
         }
         #endregion
         #region SaveButton
-        public static IWebElement GetSaveButton(IWebDriver wd)
+        public  IWebElement GetSaveButton()
         {
             return wd.FindElement(By.XPath(SAVE_BUTTON_XPath));
         }
-        public static void ClickSaveButton(IWebDriver wd)
+        public HumanityEditStaff ClickSaveButton()
         {
-            GetSaveButton(wd).Click();
+            GetSaveButton().Click();
+            return this;
         }
         #endregion
+        #region UploadPicture
+        //metoda za upload picture da bi mogli da testiramo da li se slika promenila
+        public HumanityEditStaff UploadPicture(string picture_path)
+        {
+            IWebElement uploadPicture = wd.FindElement(By.Id(FILE_UPLOAD_ID));
+            uploadPicture.SendKeys(picture_path);
+            return this;
+        }
+        #endregion
+        #region ProfilePictureURL
+        public string ProfilePictureURL()
+        {
+            IWebElement img = wd.FindElement(By.XPath(PROFILE_IMG_Xpath));
+            string src = img.GetAttribute("src");
+            return src;
+
+        }
+        #endregion
+
     }
 }

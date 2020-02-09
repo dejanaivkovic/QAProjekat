@@ -30,9 +30,11 @@ namespace QAProjekat.Page.Objects
         }
 
         #region NavigateTO
-        public void NavigateTo()
+        public HumanityHome NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
+            return this;
+
         }
         #endregion
 
@@ -42,9 +44,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(START_FREE_TRIAL_BUTTON_XPath));
         }
-        public void ClickRegister1()
+        public HumanityHome ClickRegister1()
         {
             RegisterButton1().Click();
+            return this;
         }
         #endregion
         #region LoginButton
@@ -52,9 +55,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(LOGIN_BUTTON_XPath));
         }
-        public void ClickLogin()
+        public HumanityLogIn ClickLogin()
         {
             LoginButton().Click();
+            return new HumanityLogIn(wd);
         }
         #endregion
         #region AboutUs
@@ -62,9 +66,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(ABOUT_US_XPath));
         }
-        public void ClickAboutUs()
+        public HumanityHome ClickAboutUs()
         {
             LoginButton().Click();
+            return this;
         }
         #endregion
         #region FullName
@@ -72,9 +77,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(FULL_NAME_XPath));
         }
-        public void SendFullName (string data)
+        public HumanityHome SendFullName (string data)
         {
             GetFullName().SendKeys(data);
+            return this;
         }
         #endregion
 
@@ -83,9 +89,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(WORK_EMAIL_XPath));
         }
-        public  void SendWorkEmail(string data)
+        public  HumanityHome SendWorkEmail(string data)
         {
             GetWorkEmail().SendKeys(data);
+            return this;
         }
         #endregion
         #region Cookies
@@ -103,9 +110,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(START_FREE_TRIAL_BUTTON2_XPath));
         }
-        public  void ClickRegister2()
+        public  HumanityHome ClickRegister2()
         {
             RegisterButton2().Click();
+            return this;
         }
 
         #endregion

@@ -11,9 +11,14 @@ namespace QAProjekat
     {
         static void Main(string[] args)
         {
-            //HumanityLoginTestsManual.LogInTest();
-            HumanityLoginTestsAuto.LogInTest();
 
+            //HumanityLogIn loginModel = new HumanityLogIn(wd);
+            //HumanityLoginTestsManual.LogInTest();
+            // HumanityLoginTestsAuto.LogInTest();
+            //HumanityAddNewEmployeeTestAuto.AddEmployeeTest();
+            // HumanityPicture.PictureTest();
+            HumanitySettingsTest.SettingsTest();
+            //HumanityAddNewEmployeeTestsManual.AddEmployeeTest();
             /*IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();

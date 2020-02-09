@@ -21,7 +21,7 @@ namespace QAProjekat.Page.Objects
         }
 
         #region NavigateTO
-        //umesto void stavljeno vracamo isti objekat da mozemo da vezemo pozive
+        //umesto void stavljeno vracamo isti objekat da mozemo da vezemo pozive (vidi u testu)
         public HumanityLogIn NavigateTo()
         {
             wd.Navigate().GoToUrl(URL);
@@ -55,10 +55,10 @@ namespace QAProjekat.Page.Objects
         {
             return wd.FindElement(By.XPath(LOGIN_XPath));
         }
-        public HumanityHome ClickLogin()
+        public HumanityMenu ClickLogin()
         {
             LoginButton().Click();
-            return new HumanityHome(wd);
+            return new HumanityMenu(wd);
         }
         #endregion
 

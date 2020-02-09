@@ -9,63 +9,79 @@ namespace QAProjekat.Page.Objects
 {
     public class HumanityAddEmployees
     {
-        public static readonly string URL = "vasafirma.humanity.com/app/staff/list/load/true/";
+        public static readonly string URL = "kuper.humanity.com/app/staff/list/load/true/";
         public static readonly string ADD_EMPLOYESS_XPath = "//button[@id='act_primary']";
         public static readonly string NAME_PART1_XPath = "//input[@id='_asf";//prvi deo XPath-a za name elemenat (imamo ih vise)
         public static readonly string LAST_NAME_PART1_XPath = "//input[@id='_asl"; //prvi deo XPath-a za last name elemenat
         public static readonly string EMAIL_PART1_XPath = "//input[@id='_ase";//prvi deo za XPath-a za email
         public static readonly string PART2_XPath = "']";//drugi deo XPath-a za elemente (name, last name, email)
         public static readonly string SAVE_BUTTON_XPath = "//button[@id='_as_save_multiple']";
-        
+        private IWebDriver wd;
+        public HumanityAddEmployees (IWebDriver wd)
+        {
+            this.wd = wd;
+        }
+        public HumanityAddEmployees NavigateTo(IWebDriver wd)
+        {
+            wd.Navigate().GoToUrl(URL);
+            return this;
+        }
 
         #region AddEmployess
-        public static IWebElement AddEmployessButton(IWebDriver wd)
+        public  IWebElement AddEmployessButton()
         {
             return wd.FindElement(By.XPath(ADD_EMPLOYESS_XPath));
         }
-        public static void ClickAddEmployess(IWebDriver wd)
+        public HumanityAddEmployees ClickAddEmployess()
         {
-            AddEmployessButton(wd).Click();
+            AddEmployessButton().Click();
+            return this;
         }
         #endregion
         #region Name
-        public static IWebElement GetName(IWebDriver wd, int i)
+        public  IWebElement GetName(int i)
         {
             return wd.FindElement(By.XPath(NAME_PART1_XPath + i + PART2_XPath));
         }
-        public static void SendName (IWebDriver wd, string firstName, int i)
+        public HumanityAddEmployees SendName (string firstName, int i)
         {
-            GetName(wd, i).SendKeys(firstName);
+            GetName(i).SendKeys(firstName);
+            return this;
+
         }
         #endregion
         #region LastName
-        public static IWebElement GetLastName(IWebDriver wd, int i)
+        public  IWebElement GetLastName(int i)
         {
             return wd.FindElement(By.XPath(LAST_NAME_PART1_XPath + i + PART2_XPath));
         }
-        public static void SendLastName (IWebDriver wd, string lastName, int i)
+        public HumanityAddEmployees SendLastName (string lastName, int i)
         {
-            GetLastName(wd, i).SendKeys(lastName);
+            GetLastName(i).SendKeys(lastName);
+            return this;
+
         }
         #endregion
         #region EMAIL
-        public static IWebElement GetEmail(IWebDriver wd, int i)
+        public IWebElement GetEmail(int i)
         {
             return wd.FindElement(By.XPath(EMAIL_PART1_XPath + i + PART2_XPath));
         }
-        public static void SendEmail(IWebDriver wd, string email, int i)
+        public HumanityAddEmployees SendEmail(string email, int i)
         {
-            GetEmail(wd, i).SendKeys(email);
+            GetEmail(i).SendKeys(email);
+            return this;
         }
         #endregion
         #region SaveButton
-        public static IWebElement GetSave(IWebDriver wd)
+        public IWebElement GetSave()
         {
             return wd.FindElement(By.XPath(SAVE_BUTTON_XPath));
         }
-        public static void ClickSave (IWebDriver wd)
+        public HumanityAddEmployees ClickSave ()
         {
-            GetSave(wd).Click();
+            GetSave().Click();
+            return this;
         }
         #endregion
        

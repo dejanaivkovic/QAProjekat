@@ -10,8 +10,7 @@ namespace QAProjekat.Page.Tests
 {
     public class HumanityLoginTestsManual
     {
-        public static readonly string EMAIL = "kuper@poi.com";
-        public static readonly string PASS = "agentkuper123";
+        
         public static void LogInTest()
         {
             
@@ -21,8 +20,8 @@ namespace QAProjekat.Page.Tests
             Debug.WriteLine("Driver Initialized!");
             HumanityLogIn loginModel = new HumanityLogIn(wd);
             loginModel.NavigateTo()
-                .SendEmail(EMAIL)
-                .SendPass(PASS)
+                .SendEmail(Constants.EMAIL)
+                .SendPass(Constants.PASS)
                 .ClickLogin();
             System.Threading.Thread.Sleep(5000); //stavljeno je jer mi se previse brzo ucita i test mi ne prolazi iako je tacan unos
             if(wd.Url.Contains(HumanityMenu.URL))

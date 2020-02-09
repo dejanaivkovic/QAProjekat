@@ -19,22 +19,26 @@ namespace QAProjekat.Page.Tests
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
             Debug.WriteLine("Driver initialized!!");
+            
             ExcelUtility excel = new ExcelUtility(Constants.LOGIN_EXCEL_PATH);
             excel.LoadWorkSheet(0);
             for (int i = 1; i < excel.GetRowCount(); i++)
             {
 
+                
                 string email = excel.GetDataAt(i, 0);
                 string pass = excel.GetDataAt(i, 1);
                 HumanityHome homeModel = new HumanityHome(wd);
                 homeModel.NavigateTo();
+                
                 System.Threading.Thread.Sleep(3000);
-                homeModel.ClickLogin();
-                System.Threading.Thread.Sleep(3000);
-                HumanityLogIn loginModel = new HumanityLogIn(wd);
-                loginModel.SendEmail(email);
-                loginModel.SendPass(pass);
-                loginModel.ClickLogin();
+                HumanityLogIn loginModel = homeModel.ClickLogin();
+                System.Threading.Thread.Sleep(5000);
+                //ovde sam stavila DeleteAllCookies jer sam skontala da ako pukne program sledeci put kad se pokrene kao da je selenium zapamtio i ostanu mi 
+                wd.Manage().Cookies.DeleteAllCookies(); //delete all cookies
+                loginModel.SendEmail(email)
+                    .SendPass(pass)
+                    .ClickLogin();
                 System.Threading.Thread.Sleep(3000);
                 if (wd.Url.Contains(HumanityMenu.URL))
                 {
@@ -46,9 +50,9 @@ namespace QAProjekat.Page.Tests
                     Console.WriteLine("FAIL, Page failed loading!");
                     
                 }
-
-
                 wd.Manage().Cookies.DeleteAllCookies(); //delete all cookies
+
+
 
 
             }

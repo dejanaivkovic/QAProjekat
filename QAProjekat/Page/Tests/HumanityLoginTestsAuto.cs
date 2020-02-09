@@ -4,33 +4,47 @@ using System.Text;
 using QAProjekat.Page.Objects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Diagnostics;
+using NUnit.Framework;
 
 
 namespace QAProjekat.Page.Tests
 {
+    [TestFixture]
     public class HumanityLoginTestsAuto
     {
+        IWebDriver wd;
 
-        public static void LogInTest()
+        [SetUp]
+        public void setup()
         {
-
             IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
-            Debug.WriteLine("Driver initialized!!");
-            
+        }
+
+
+        [TearDown]
+        public void tearDown()
+        {
+
+            wd.Manage().Cookies.DeleteAllCookies(); //delete all cookies
+        }
+
+
+        [Test]
+        public void LogInTest()
+        {
             ExcelUtility excel = new ExcelUtility(Constants.LOGIN_EXCEL_PATH);
             excel.LoadWorkSheet(0);
             for (int i = 1; i < excel.GetRowCount(); i++)
             {
 
-                
+
                 string email = excel.GetDataAt(i, 0);
                 string pass = excel.GetDataAt(i, 1);
                 HumanityHome homeModel = new HumanityHome(wd);
                 homeModel.NavigateTo();
-                
+
                 System.Threading.Thread.Sleep(3000);
                 HumanityLogIn loginModel = homeModel.ClickLogin();
                 System.Threading.Thread.Sleep(5000);
@@ -40,24 +54,17 @@ namespace QAProjekat.Page.Tests
                     .SendPass(pass)
                     .ClickLogin();
                 System.Threading.Thread.Sleep(3000);
-                if (wd.Url.Contains(HumanityMenu.URL))
-                {
-                    Console.WriteLine("PASS, Register loaded successfully!");
-                
-                }
-                else
-                {
-                    Console.WriteLine("FAIL, Page failed loading!");
-                    
-                }
-                wd.Manage().Cookies.DeleteAllCookies(); //delete all cookies
+                Assert.IsTrue(wd.Url.Contains(HumanityMenu.URL));
+
+
 
 
 
 
             }
-            wd.Quit();
-
         }
+
+
+
     }
 }

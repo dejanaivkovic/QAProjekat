@@ -5,21 +5,42 @@ using QAProjekat.Page.Objects;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Diagnostics;
+using NUnit.Framework;
 
 namespace QAProjekat.Page.Tests
 {
+    [TestFixture]
     public class HumanityAddNewEmployeeTestsManual
     {
         public static readonly string URL = "https://kuper.humanity.com/app/staff/assignstaff";
         public static readonly string NAME = "Bozidar";
         public static readonly string LAST_NAME = "Boozic";
         public static readonly string EMAIL_1 = "bozidarbozic1@boza.com";
-        public static void AddEmployeeTest()
+        IWebDriver wd;
+        HumanityLogIn loginModel;
+        HumanityMenu menuModel;
+        [SetUp]
+        public void setup()
+        {
+            wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
+            wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+            wd.Manage().Window.Maximize();
+        }
+
+
+        [TearDown]
+        public void tearDown()
+        {
+            wd.Quit();
+        }
+
+        [Test]
+        public  void AddEmployeeTest()
         {
             IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
-            Debug.WriteLine("Driver Initialized!");
+            
             HumanityLogIn loginModel = new HumanityLogIn(wd);
             HumanityMenu menuModel = loginModel.NavigateTo()
                 .SendEmail(Constants.EMAIL)
@@ -56,7 +77,7 @@ namespace QAProjekat.Page.Tests
             }
 
 
-            wd.Quit();
+          
 
 
 

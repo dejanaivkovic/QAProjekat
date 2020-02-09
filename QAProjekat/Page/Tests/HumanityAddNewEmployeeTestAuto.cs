@@ -5,25 +5,43 @@ using QAProjekat.Page.Objects;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Diagnostics;
+using NUnit.Framework;
 
 namespace QAProjekat.Page.Tests
 {
+    [TestFixture]
+
     class HumanityAddNewEmployeeTestAuto
     {
         public static readonly string URL = "https://kuper.humanity.com/app/staff/assignstaff";
-        public static void AddEmployeeTest()
+        IWebDriver wd;
+       
+
+        [SetUp]
+        public void setup()
         {
-            IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
+            wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
-            Debug.WriteLine("Driver initialized!!");
+            
+        }
+
+        [TearDown]
+        public void tearDown()
+        {
+            wd.Quit();
+        }
+
+        [Test]
+        public void AddEmployeeTest()
+        {
             HumanityLogIn loginModel = new HumanityLogIn(wd);
             HumanityMenu menuModel = loginModel.NavigateTo()
                .SendEmail(Constants.EMAIL)
                .SendPass(Constants.PASS)
                .ClickLogin();
             System.Threading.Thread.Sleep(5000);
-            
+
             ExcelUtility excel = new ExcelUtility(Constants.ZAPOSLENI_EXCEL_PATH);
             for (int j = 0; j < 2; j++)
             {
@@ -75,7 +93,12 @@ namespace QAProjekat.Page.Tests
 
 
         }
-
-
     }
+        
+
+
+        
+
+
+    
 }

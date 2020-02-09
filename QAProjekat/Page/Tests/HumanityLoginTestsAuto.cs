@@ -29,6 +29,7 @@ namespace QAProjekat.Page.Tests
                 string email = excel.GetDataAt(i, 0);
                 string pass = excel.GetDataAt(i, 1);
                 HumanityHome homeModel = new HumanityHome(wd);
+                wd.Manage().Cookies.DeleteAllCookies();
                 homeModel.NavigateTo();
                 
                 System.Threading.Thread.Sleep(3000);

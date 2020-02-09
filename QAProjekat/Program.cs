@@ -17,7 +17,7 @@ namespace QAProjekat
             // HumanityLoginTestsAuto.LogInTest();
             //HumanityAddNewEmployeeTestAuto.AddEmployeeTest();
             // HumanityPicture.PictureTest();
-            HumanitySettingsTest.SettingsTest();
+            HumanityLoginTestsAuto.LogInTest();
             //HumanityAddNewEmployeeTestsManual.AddEmployeeTest();
             /*IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);

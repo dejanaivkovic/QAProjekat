@@ -13,18 +13,23 @@ namespace QAProjekat.Page.Tests
     public class HumanityAddNewEmployeeTestsManual
     {
         public static readonly string URL = "https://kuper.humanity.com/app/staff/assignstaff";
-        public static readonly string NAME = "Bozidar";
-        public static readonly string LAST_NAME = "Boozic";
-        public static readonly string EMAIL_1 = "bozidarbozic1@boza.com";
         IWebDriver wd;
-        HumanityLogIn loginModel;
-        HumanityMenu menuModel;
+        HumanityStaff staffModel;
         [SetUp]
         public void setup()
         {
             wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
+
+            HumanityLogIn loginModel = new HumanityLogIn(wd);
+            HumanityMenu menuModel = loginModel.NavigateTo()
+                .SendEmail(Constants.EMAIL)
+                .SendPass(Constants.PASS)
+                .ClickLogin();
+            System.Threading.Thread.Sleep(5000);
+            staffModel = menuModel.ClickStaff();
+            System.Threading.Thread.Sleep(5000);
         }
 
 
@@ -34,57 +39,58 @@ namespace QAProjekat.Page.Tests
             wd.Quit();
         }
 
+        
+
+
         [Test]
-        public  void AddEmployeeTest()
+        public void AddEmployeesTest()
         {
-            IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
-            wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-            wd.Manage().Window.Maximize();
-            
-            HumanityLogIn loginModel = new HumanityLogIn(wd);
-            HumanityMenu menuModel = loginModel.NavigateTo()
-                .SendEmail(Constants.EMAIL)
-                .SendPass(Constants.PASS)
-                .ClickLogin();
-            System.Threading.Thread.Sleep(5000);
-            HumanityStaff staffModel = menuModel.ClickStaff();
-            System.Threading.Thread.Sleep(5000);
-            staffModel
-                .ClickAddEmployess()
-                .SendName(NAME, 1)
-                .SendLastName(LAST_NAME, 1)
-                .SendEmail(EMAIL_1, 1)
-                .ClickSave();
-            System.Threading.Thread.Sleep(5000);
-            if (wd.Url.Contains(URL)) //prvi korak za proveru, da li je otisao na pravu stranicu, ali to nije dovoljno da bi znali
+            string[] names = { "Prisvojni", "Nikola", "Boza", "Mikica" };
+            string[] last_names = { "Pridevi", "", "Bozic", "Mili" };
+            string[] emails = { "prisvojni@pridevi.com", "nikolic@nikola.com", "bozic@bozidar1.com", "" };
+            HumanityAddEmployees add_employees = staffModel
+                .ClickAddEmployess();
+            for(int i = 0; i < names.Length; i++)
             {
-                staffModel.NavigateTo();
-                System.Threading.Thread.Sleep(5000);
-                try
-                {
-                    staffModel.ClickName(NAME + " " + LAST_NAME);
-                    Console.WriteLine("PASS, Register loaded successfully!");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("FAIL, Employee not present on page!");
-                }
-                
+                add_employees
+                    .SendName(names[i], i+1)
+                    .SendLastName(last_names[i], i + 1)
+                    .SendEmail(emails[i], i + 1);
             }
-            else
+            add_employees.ClickSave();
+            System.Threading.Thread.Sleep(5000);
+            Assert.IsTrue(wd.Url.Contains(URL));
+            staffModel.NavigateTo();
+            System.Threading.Thread.Sleep(5000);
+            for (int i = 1; i < names.Length; i++)
             {
-                Console.WriteLine("FAIL, Page failed loading!");
+                string first_name = names[i];
+                string last_name = last_names[i];
+                staffModel.GetByName(first_name + " " + last_name);
+                // ne treba try/catch jer ako se desi exception test ce da pukne, sto je i ocekivano
+
             }
-
-
-          
-
-
-
-
         }
 
-
-
+        [Test]
+        public void AddEmployeesTestWrong()
+        {
+            string[] names = { " ", "Milomir", "Asia" };
+            string[] last_names = { "dragica", "milo", "Oceania" };
+            string[] emails = { "dragica@draga.com", "milo@millo.com", "oceania@asia.com"};
+            HumanityAddEmployees add_employees = staffModel
+                .ClickAddEmployess();
+            for (int i = 0; i < names.Length; i++)
+            {
+                add_employees
+                    .SendName(names[i], i + 1)
+                    .SendLastName(last_names[i], i + 1)
+                    .SendEmail(emails[i], i + 1);
+            }
+            add_employees.ClickSave();
+            System.Threading.Thread.Sleep(5000);
+            Assert.IsFalse(wd.Url.Contains(URL));
+           
+        }
     }
 }

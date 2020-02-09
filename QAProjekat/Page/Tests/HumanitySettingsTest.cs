@@ -4,58 +4,59 @@ using System.Text;
 using QAProjekat.Page.Objects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Diagnostics;
+using NUnit.Framework;
 
 namespace QAProjekat.Page.Tests
 {
+    [TestFixture]
     class HumanitySettingsTest
     {
-        public static void SettingsTest()
+        IWebDriver wd;
+        HumanitySettings settingsModel;
+        [OneTimeSetUp]
+        public void setup()
         {
-
-            IWebDriver wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
+            wd = new ChromeDriver(Constants.WEBDRIVER_PATH);
             wd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             wd.Manage().Window.Maximize();
-            Debug.WriteLine("Driver Initialized!");
+
             HumanityLogIn loginModel = new HumanityLogIn(wd);
             HumanityMenu menuModel = loginModel.NavigateTo()
                 .SendEmail(Constants.EMAIL)
                 .SendPass(Constants.PASS)
                 .ClickLogin();
             System.Threading.Thread.Sleep(5000);
-            HumanitySettings settingsModel = menuModel.ClickSettings();
+            settingsModel = menuModel.ClickSettings();
+        }
+        [OneTimeTearDown]
+        public void tearDown()
+        {
+            wd.Quit();
+        }
+        [Test]
+        public  void SettingsCountryTest()
+        {
             settingsModel.SelectCountry("Serbia")
-            .SelectLanguage("American English")
-            .SelectTimeFormat("12 hour")
             .ClickSave();
             System.Threading.Thread.Sleep(3000);
-            if(settingsModel.GetSelectedCountry() == "Serbia")
-            {
-                Console.WriteLine("PASS! Successfully selected country");
-            } else
-            {
-                Console.WriteLine("FAIL! Selected country not right");
-            }
-            if(settingsModel.GetSelectedLanguage()=="American English")
-            {
-                Console.WriteLine("PASS! Successfully selected language!");
-            }
-            else
-            {
-                Console.WriteLine("FAIL! Selected language not right");
-            }
-            if(settingsModel.GetSelectedTimeFormat()=="12 hour")
-            {
-                Console.WriteLine("PASS! Successfully selected time format!");
-            }
-            else
-            {
-                Console.WriteLine("FAIL! Selected time format not right");
-            }
-           
-
-
-
+            Assert.AreEqual(settingsModel.GetSelectedCountry(), "Serbia");
+         
+        }
+        [Test]
+        public void SettingsLanguageTest()
+        {
+            settingsModel.SelectLanguage("American English")
+              .ClickSave();
+            System.Threading.Thread.Sleep(3000);    
+            Assert.AreEqual(settingsModel.GetSelectedLanguage(), "American English");  
+        }
+        [Test]
+        public void SettingsTimeFormatTest()
+        {
+            settingsModel.SelectTimeFormat("12 hour")
+                  .ClickSave();
+            System.Threading.Thread.Sleep(3000);
+            Assert.AreEqual(settingsModel.GetSelectedTimeFormat(), "12 hour");
         }
     }
 }
